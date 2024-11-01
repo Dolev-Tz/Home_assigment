@@ -1,4 +1,4 @@
-pipelineJob("frestyle_python") {
+lopipelineJob("frestyle_python") {
 
   definition {
            cps {
@@ -6,7 +6,7 @@ pipelineJob("frestyle_python") {
                  pipeline {
                     agent any
                     stages {
-                        stage('Greet') {
+                        stage('Hello') {
                             steps {
                                 echo "Hello!! python"
                             }
