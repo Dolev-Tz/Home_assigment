@@ -1,4 +1,4 @@
-lopipelineJob("frestyle_python") {
+pipelineJob("frestyle_python") {
 
   definition {
            cps {
