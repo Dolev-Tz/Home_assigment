@@ -14,7 +14,7 @@ pipelineJob("frestyle_python") {
                     stages {
                         stage('Checkout Code') {
                             steps {
-                                git url: 'https://github.com/Dolev-Tz/Home-assignment.git', branch: 'python'
+                                git url: 'https://github.com/Dolev-Tz/Home-assignment.git', branch: 'main'
                             }
                         }
 
