@@ -1,8 +1,7 @@
 pipelineJob('nginx-proxy-job') {
-
     definition {
         cps {
-            script('''
+            script(''' 
             def image
                 pipeline {
                     agent any
@@ -16,12 +15,14 @@ pipelineJob('nginx-proxy-job') {
                         stage('Prepare Configuration') {
                             steps {
                                 script {
+                                    echo 'Creating nginx.conf and Dockerfile...'
+
                                     // Create nginx.conf
                                     writeFile file: 'nginx.conf', text: '''
                                     http {
                                         server {
                                             listen 80;
-                
+
                                             location / {
                                                 proxy_pass http://flask_app:5000;  // Adjust this to your Flask app's service name and port
                                                 proxy_set_header X-Forwarded-For $remote_addr; // Inject source IP
@@ -31,13 +32,13 @@ pipelineJob('nginx-proxy-job') {
                                         }
                                     }
                                     '''
-                
+
                                     // Create Dockerfile
                                     writeFile file: 'Dockerfile', text: '''
                                     FROM nginx:latest
-                
+
                                     COPY nginx.conf /etc/nginx/conf.d/default.conf
-                
+
                                     EXPOSE 80
                                     '''
                                 }
@@ -47,6 +48,7 @@ pipelineJob('nginx-proxy-job') {
                         stage('Build Docker Image') {
                             steps {
                                 script {
+                                    echo 'Building Docker image...'
                                     image = docker.build(env.DOCKER_IMAGE)
                                 }
                             }
@@ -55,6 +57,7 @@ pipelineJob('nginx-proxy-job') {
                         stage('Push to Docker Hub') {
                             steps {
                                 script {
+                                    echo 'Pushing image to Docker Hub...'
                                     docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
                                         image.push('latest')
                                     }
