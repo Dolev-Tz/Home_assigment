@@ -25,9 +25,9 @@ pipelineJob('nginx-proxy-job') {
 
                                             location / {
                                                 proxy_pass http://flask_app:5000;  // Adjust this to your Flask app's service name and port
-                                                proxy_set_header X-Forwarded-For $remote_addr; // Inject source IP
-                                                proxy_set_header Host $host;
-                                                proxy_set_header X-Real-IP $remote_addr;
+                                                proxy_set_header X-Forwarded-For \$remote_addr; // Inject source IP
+                                                proxy_set_header Host \$host;
+                                                proxy_set_header X-Real-IP \$remote_addr;
                                             }
                                         }
                                     }
