@@ -13,9 +13,34 @@ pipelineJob('nginx-proxy-job') {
                     }
 
                     stages {
-                        stage('Checkout Code') {
+                        stage('Prepare Configuration') {
                             steps {
-                                git url: 'https://github.com/Dolev-Tz/Home-assignment.git', branch: 'main'
+                                script {
+                                    // Create nginx.conf
+                                    writeFile file: 'nginx.conf', text: '''
+                                    http {
+                                        server {
+                                            listen 80;
+                
+                                            location / {
+                                                proxy_pass http://flask_app:5000;  // Adjust this to your Flask app's service name and port
+                                                proxy_set_header X-Forwarded-For $remote_addr; // Inject source IP
+                                                proxy_set_header Host $host;
+                                                proxy_set_header X-Real-IP $remote_addr;
+                                            }
+                                        }
+                                    }
+                                    '''
+                
+                                    // Create Dockerfile
+                                    writeFile file: 'Dockerfile', text: '''
+                                    FROM nginx:latest
+                
+                                    COPY nginx.conf /etc/nginx/conf.d/default.conf
+                
+                                    EXPOSE 80
+                                    '''
+                                }
                             }
                         }
 
