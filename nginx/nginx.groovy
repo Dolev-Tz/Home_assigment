@@ -2,8 +2,8 @@ pipelineJob('nginx-proxy-job') {
 
     definition {
         cps {
-            script("""
-                def image
+            script('''
+            def image
                 pipeline {
                     agent any
 
@@ -38,7 +38,7 @@ pipelineJob('nginx-proxy-job') {
                         }
                     }
                 }
-            """)
+            ''')
             sandbox()
         }
     }
