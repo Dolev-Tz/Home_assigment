@@ -1,5 +1,4 @@
 pipelineJob('nginx-proxy-job') {
-    description('Job to build and push Nginx proxy for Flask app.')
 
     definition {
         cps {
