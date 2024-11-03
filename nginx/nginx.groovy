@@ -18,7 +18,7 @@ pipelineJob('nginx-proxy-job') {
                                     echo 'Creating nginx.conf and Dockerfile...'
 
                                     // Create nginx.conf
-                                    writeFile file: 'nginx.conf', text: '''
+                                    writeFile file: 'nginx.conf', text: """
                                     http {
                                         server {
                                             listen 80;
@@ -31,16 +31,16 @@ pipelineJob('nginx-proxy-job') {
                                             }
                                         }
                                     }
-                                    '''
+                                    """
 
                                     // Create Dockerfile
-                                    writeFile file: 'Dockerfile', text: '''
+                                    writeFile file: 'Dockerfile', text: """
                                     FROM nginx:latest
 
                                     COPY nginx.conf /etc/nginx/conf.d/default.conf
 
                                     EXPOSE 80
-                                    '''
+                                    """
                                 }
                             }
                         }
