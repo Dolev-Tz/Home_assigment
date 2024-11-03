@@ -3,6 +3,7 @@ pipelineJob('nginx-proxy-job') {
     definition {
         cps {
             script("""
+                def image
                 pipeline {
                     agent any
 
