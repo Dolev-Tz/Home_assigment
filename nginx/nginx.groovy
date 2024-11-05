@@ -19,16 +19,17 @@ pipelineJob('nginx-proxy-job') {
 
                                     // Create nginx.conf
                                     writeFile file: 'nginx.conf', text: """
-                                    http {
-                                        server {
-                                            listen 80;
-
-                                            location / {
-                                                proxy_pass http://flask_app:5000;  // Adjust this to your Flask app's service name and port
-                                                proxy_set_header X-Forwarded-For \$remote_addr; // Inject source IP
-                                                proxy_set_header Host \$host;
-                                                proxy_set_header X-Real-IP \$remote_addr;
-                                            }
+                                    upstream flask_app {
+                                        server flask_app_expose1:5000;
+                                    }
+                                    server {
+                                        listen 80;
+                                    
+                                        location / {
+                                            proxy_pass http://flask_app;
+                                            proxy_set_header X-Forwarded-For \$remote_addr;  # Inject source IP
+                                            proxy_set_header Host \$host;
+                                            proxy_set_header X-Real-IP \$remote_addr;
                                         }
                                     }
                                     """
@@ -53,7 +54,7 @@ pipelineJob('nginx-proxy-job') {
                                 }
                             }
                         }
-
+                        
                         stage('Push to Docker Hub') {
                             steps {
                                 script {
@@ -64,7 +65,6 @@ pipelineJob('nginx-proxy-job') {
                                 }
                             }
                         }
-                    }
                 }
             ''')
             sandbox()
