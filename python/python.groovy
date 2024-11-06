@@ -14,7 +14,7 @@ pipelineJob("Flask Image") {
                     stages {
                         stage('Checkout Code') {
                             steps {
-                                git url: 'https://github.com/Dolev-Tz/Home-assignment.git', branch: 'main'
+                                git url: 'https://github.com/Dolev-Tz/Home_assignment.git', branch: 'main'
                             }
                         }
 
