@@ -12,37 +12,9 @@ pipelineJob('Nginx Image') {
                     }
 
                     stages {
-                        stage('Prepare Configuration') {
+                        stage('Checkout Code') {
                             steps {
-                                script {
-                                    echo 'Creating nginx.conf and Dockerfile...'
-
-                                    // Create nginx.conf
-                                    writeFile file: 'nginx.conf', text: """
-                                    upstream flask_app {
-                                        server flask_app_expose1:5000;
-                                    }
-                                    server {
-                                        listen 80;
-                                    
-                                        location / {
-                                            proxy_pass http://flask_app;
-                                            proxy_set_header X-Forwarded-For \$remote_addr;  # Inject source IP
-                                            proxy_set_header Host \$host;
-                                            proxy_set_header X-Real-IP \$remote_addr;
-                                        }
-                                    }
-                                    """
-
-                                    // Create Dockerfile
-                                    writeFile file: 'Dockerfile', text: """
-                                    FROM nginx:latest
-
-                                    COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-                                    EXPOSE 80
-                                    """
-                                }
+                                git url: 'https://github.com/Dolev-Tz/Home_assignment.git', branch: 'main'
                             }
                         }
 
@@ -50,7 +22,7 @@ pipelineJob('Nginx Image') {
                             steps {
                                 script {
                                     echo 'Building Docker image...'
-                                    image = docker.build(env.DOCKER_IMAGE, '-f nginx/Dockerfile nginx)
+                                    image = docker.build(env.DOCKER_IMAGE, '-f nginx/Dockerfile nginx')
                                 }
                             }
                         }
