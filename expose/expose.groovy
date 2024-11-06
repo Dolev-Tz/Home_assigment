@@ -1,4 +1,4 @@
-pipelineJob('run-nginx-flask-job') {
+pipelineJob('Expose Images') {
     definition {
         cps {
             script('''
