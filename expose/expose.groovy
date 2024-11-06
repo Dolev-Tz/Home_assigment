@@ -20,10 +20,10 @@ pipelineJob('Expose Images') {
 
                                 bat 'Docker network create app_network'
                                 // Start Flask app container
-                                bat "docker run -d -p 5000:5000 --network app_network --name flask_app_expose1 -v /var/run/docker.sock:/var/run/docker.sock ${FLASK_IMAGE}"
+                                bat "docker run -d -p 5000:5000 --network app_network --name flask_app_expose -v /var/run/docker.sock:/var/run/docker.sock ${FLASK_IMAGE}"
                                 
                                 // Start Nginx proxy container, mapping NGINX_PORT to LOCAL_PORT
-                                bat "docker run -d --network app_network --name nginx_proxy_expose1 -p ${LOCAL_PORT}:${NGINX_PORT} ${NGINX_IMAGE}"
+                                bat "docker run -d --network app_network --name nginx_proxy_expose -p ${LOCAL_PORT}:${NGINX_PORT} ${NGINX_IMAGE}"
                             }
                         }
                     }
