@@ -21,7 +21,7 @@ pipelineJob("frestyle_python") {
                         stage('Build Docker Image') {
                             steps {
                                 script {
-                                    image = docker.build(env.DOCKER_IMAGE)
+                                    image = docker.build(env.DOCKER_IMAGE, '-f python/Dockerfile flask')
                                 }
                             }
                         }
