@@ -37,6 +37,7 @@ pipelineJob('Nginx Image') {
                                 }
                             }
                         }
+                    }
                 }
             ''')
             sandbox()
