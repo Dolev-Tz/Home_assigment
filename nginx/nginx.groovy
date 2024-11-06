@@ -1,4 +1,4 @@
-pipelineJob('nginx-proxy-job') {
+pipelineJob('Nginx Image') {
     definition {
         cps {
             script(''' 
