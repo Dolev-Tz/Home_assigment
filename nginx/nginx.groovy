@@ -50,7 +50,7 @@ pipelineJob('nginx-proxy-job') {
                             steps {
                                 script {
                                     echo 'Building Docker image...'
-                                    image = docker.build(env.DOCKER_IMAGE)
+                                    image = docker.build(env.DOCKER_IMAGE, '-f nginx/Dockerfile nginx)
                                 }
                             }
                         }
