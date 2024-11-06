@@ -9,7 +9,6 @@ pipeline {
         }
         stage('Setup Kubernetes Context') {
             steps {
-                // For Docker Desktop Kubernetes, context is usually set
                 bat 'kubectl config current-context'
             }
         }
@@ -39,20 +38,6 @@ pipeline {
                 kubectl apply -f flask-scaledobject.yaml
                 '''
             }
-        }
-    }
-    post {
-        always {
-            // Optionally clean up resources
-            bat '''
-            kubectl delete -f flask-scaledobject.yaml || true
-            kubectl delete -f nginx-service.yaml || true
-            kubectl delete -f nginx-deployment.yaml || true
-            kubectl delete -f flask-service.yaml || true
-            kubectl delete -f flask-deployment.yaml || true
-            helm uninstall keda --namespace keda || true
-            kubectl delete namespace my-app || true
-            '''
         }
     }
 }
