@@ -1,4 +1,4 @@
-pipelineJob("frestyle_python") {
+pipelineJob("Flask Image") {
 
   definition {
            cps {
